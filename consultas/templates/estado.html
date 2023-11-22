@@ -1,0 +1,60 @@
+{% extends 'layouts/base_1.html' %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="text-center">Estado de Solicitudes de Permisos Realizadas por el Estudiante</h1>
+        </div>
+        <div class="text-center col-md-64">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Materia(s)</th>
+                        <th>Estado del (de los) Permiso(s) Solicitado(s)</th>
+                        <th>Fecha en la que se Realiza la Solicitud</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for id_solicitud, permisos in grouped_permisos.items %}
+                        <tr>
+                            <td>
+                                <button class="btn btn-primary toggle-button" data-target="materiasContainer{{ id_solicitud }}">Ver Materia(s)</button>
+                                <div class="materiasContainer" id="materiasContainer{{ id_solicitud }}" style="display: none;">
+                                    {% for permiso in permisos %}
+                                        {{ permiso.materia }}
+                                        {% if not forloop.last %}, {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </td>
+                            <td class="{% if permisos.0.estado == 'Aceptado' %}table-success{% elif permisos.0.estado == 'Rechazado' %}table-danger{% elif permisos.0.estado == 'Pendiente' %}table-warning{% endif %}">
+                                <strong>{{ permisos.0.estado }}</strong>  {# Utilizamos permisos.0 para obtener el estado de la primera materia #}
+                            </td>
+                            <td>{{ permisos.0.fechaSolicitud }}</td>  {# Utilizamos permisos.0 para obtener la fecha de solicitud de la primera materia #}
+                            <td>{{ permisos.0.observaciones }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>                
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleButtons = document.querySelectorAll(".toggle-button");
+
+    toggleButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const targetId = this.getAttribute("data-target");
+            const targetContainer = document.getElementById(targetId);
+
+            if (targetContainer.style.display === "none" || targetContainer.style.display === "") {
+                targetContainer.style.display = "block";
+            } else {
+                targetContainer.style.display = "none";
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "layouts/base_1.html" %} {% block content %}
+<h2 id="msg" name="msg" style="color: red; text-align: center">{{msg}}</h2>
+<div class="container d-flex align-items-center justify-content-center mt-3">
+  <div class="card py-4">
+    <h1 class="text-center mb-4">Ingrese su Carnet de Identidad</h1>
+    <form method="POST" action="{% url 'estado' %}">
+      {% csrf_token %}
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          name="carnet"
+          class="form-control"
+          placeholder="Número de Carnet de Identidad"
+          aria-label="Número de Carnet"
+        />
+        <div class="input-group-append">
+          <button type="submit" class="btn btn-success">Consultar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
