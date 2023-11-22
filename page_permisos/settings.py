@@ -134,7 +134,7 @@ USE_TZ = True
 
 STATIC_URL = '/cidimec/licencias-imt/static_files/'
 STATICFILES_DIRS = [
-    BASE_DIR / 'statics',
+    BASE_DIR / 'registro/static',
 ]
 STATIC_ROOT = BASE_DIR / 'static_files'
 
