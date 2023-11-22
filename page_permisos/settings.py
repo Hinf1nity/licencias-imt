@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-t!i=oxe7)y3cntmz(11icgd*z-t$h3hrm_xv0bjrsl25w5f)2)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['www.imt.ucb.edu.bo']
 
 
@@ -79,23 +79,23 @@ WSGI_APPLICATION = 'page_permisos.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'imtucbco_licencias',
-        'USER': 'imtucbco_licencias',
-        'PASSWORD': 'C1D1M3C.imt',
-        'HOST': '127.0.0.1',  # O la dirección de tu servidor MySQL
-        'PORT': '3306',           # Por lo general, el puerto de MySQL es 3306
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'imtucbco_licencias',
+#         'USER': 'imtucbco_licencias',
+#         'PASSWORD': 'C1D1M3C.imt',
+#         'HOST': '127.0.0.1',  # O la dirección de tu servidor MySQL
+#         'PORT': '3306',           # Por lo general, el puerto de MySQL es 3306
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -135,7 +135,7 @@ USE_TZ = True
 STATIC_URL = '/cidimec/licencias-imt/static_files/'
 STATICFILES_DIRS = [
     BASE_DIR / 'statics',
-    ]
+]
 STATIC_ROOT = BASE_DIR / 'static_files'
 
 # Default primary key field type
