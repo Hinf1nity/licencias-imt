@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-t!i=oxe7)y3cntmz(11icgd*z-t$h3hrm_xv0bjrsl25w5f)2)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['www.imt.ucb.edu.bo']
+ALLOWED_HOSTS = ['www.imt.ucb.edu.bo', '127.0.0.1']
 
 
 # Application definition
