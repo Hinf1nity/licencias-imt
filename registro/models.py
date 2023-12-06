@@ -27,7 +27,6 @@ class permisos(models.Model):
         ('aceptado', 'Aceptado'),
         ('rechazado', 'Rechazado'),
     )
-
     materia = models.CharField(max_length=200)
     fecha = models.DateField()
     horaInicio = models.TimeField()
@@ -36,7 +35,7 @@ class permisos(models.Model):
     descripcion = models.TextField(null=True, blank=True)
     fechaSolicitud = models.DateField(auto_now_add=True)
     estado = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pendiente')
-    project = models.ForeignKey(estudiantes, on_delete=models.CASCADE)
+    project = models.ForeignKey(estudiantes, on_delete=models.CASCADE)   
     observaciones = models.TextField(null=True, blank=True)
     id_solicitud = models.IntegerField(null=True, blank=True)
     

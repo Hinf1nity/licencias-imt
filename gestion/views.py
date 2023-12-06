@@ -82,7 +82,7 @@ class AdminOnlyView(LoginRequiredMixin, View):
             permiso_id = request.POST.get('permisoid_solicitud')
             new_status = request.POST.get('status')
             permisos = RegistroPermisos.objects.filter(id_solicitud=permiso_id)
-            if new_status == 'Aceptado' or new_status == 'Rechazado':
+            if new_status == 'Aceptado' or new_status == 'Rechazado' or new_status == 'Observado':
                 for i in permisos:
                     form = RegistroPermisosForm(request.POST, instance=i)
                 for i in permisos:
