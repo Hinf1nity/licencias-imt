@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'registro',
     'consultas',
     'gestion',
+    'login',
+    'logout',
 ]
 
 MIDDLEWARE = [
@@ -74,7 +76,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'page_permisos.wsgi.application'
-
+LOGIN_REDIRECT_URL = '/cidimec/licencias-imt/gestion/'
+LOGOUT_REDIRECT_URL = '/cidimec/licencias-imt/login/'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

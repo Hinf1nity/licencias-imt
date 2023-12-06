@@ -29,6 +29,13 @@
         </div>
     </div>
 </header>
+<nav class="navbar navbar-dark bg-secondary py-1">
+    <div class="container d-flex justify-content-center">
+        <span class="navbar-text fw-bold fs-6 text-dark text-center">
+            SISTEMA DE REGISTRO DE LICENCIAS ÚNICAMENTE PARA ASIGNATURAS DE LA CARRERA DE INGENIERÍA MECATRÓNICA
+        </span>
+    </div>
+</nav>
 
 <body>
     <div class="container">
@@ -249,4 +256,44 @@
 </body>
 
 </html>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Función para aplicar el filtrado de fechas
+        function aplicarFiltrado() {
+            // Obtén todos los elementos de entrada de fecha
+            var fechaInputs = document.querySelectorAll('input[type="date"]');
+
+            // Configura la fecha mínima permitida
+            var fechaActual = new Date();
+            var fechaMinima = new Date(fechaActual);
+            fechaMinima.setDate(fechaActual.getDate() - 20);
+
+            // Convierte la fecha mínima a formato ISO (YYYY-MM-DD)
+            var fechaMinimaISO = fechaMinima.toISOString().split('T')[0];
+
+            // Itera sobre los elementos de entrada de fecha y establece los atributos
+            fechaInputs.forEach(function (fechaInput) {
+                fechaInput.setAttribute('min', fechaMinimaISO);
+                // Deja la fecha máxima sin restricciones
+            });
+        }
+
+        // Aplicar el filtrado al cargar la página
+        aplicarFiltrado();
+
+        // Observador de mutaciones para detectar nuevos elementos de entrada de fecha
+        var observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+                if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+                    // Si se agregan nuevos nodos, aplicar el filtrado nuevamente
+                    aplicarFiltrado();
+                }
+            });
+        });
+
+        // Configurar el observador para observar cambios en el cuerpo del documento
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+</script>
+
 {% endblock %}
