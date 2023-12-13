@@ -254,8 +254,6 @@
     <script src="{% static 'registro/script.js' %}"></script>
 
 </body>
-
-</html>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Función para aplicar el filtrado de fechas
@@ -263,19 +261,26 @@
             // Obtén todos los elementos de entrada de fecha
             var fechaInputs = document.querySelectorAll('input[type="date"]');
 
-            // Configura la fecha mínima permitida
-            var fechaActual = new Date();
-            var fechaMinima = new Date(fechaActual);
-            fechaMinima.setDate(fechaActual.getDate() - 20);
-
-            // Convierte la fecha mínima a formato ISO (YYYY-MM-DD)
-            var fechaMinimaISO = fechaMinima.toISOString().split('T')[0];
-
             // Itera sobre los elementos de entrada de fecha y establece los atributos
             fechaInputs.forEach(function (fechaInput) {
+                // Configura la fecha mínima permitida para cada campo de fecha
+                var fechaActual = new Date();
+                var fechaMinima = new Date(fechaActual);
+                fechaMinima.setDate(fechaActual.getDate() - 20);
+
+                // Convierte la fecha mínima a formato ISO (YYYY-MM-DD)
+                var fechaMinimaISO = fechaMinima.toISOString().split('T')[0];
+
                 fechaInput.setAttribute('min', fechaMinimaISO);
-                // Deja la fecha máxima sin restricciones
+                
+                // Agrega un manejador de eventos para prevenir la edición manual
+                fechaInput.addEventListener('keydown', prevenirEdicionManual);
             });
+        }
+
+        // Función para prevenir la edición manual de la fecha
+        function prevenirEdicionManual(event) {
+            event.preventDefault();
         }
 
         // Aplicar el filtrado al cargar la página
@@ -295,5 +300,6 @@
         observer.observe(document.body, { childList: true, subtree: true });
     });
 </script>
+
 
 {% endblock %}

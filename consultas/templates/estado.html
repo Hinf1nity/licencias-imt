@@ -19,16 +19,56 @@
                     {% for id_solicitud, permisos in grouped_permisos.items %}
                     <tr>
                         <td>
-                            <button class="btn btn-primary toggle-button"
-                                data-target="materiasContainer{{ id_solicitud }}">Ver Materia(s)</button>
-                            <div class="materiasContainer" id="materiasContainer{{ id_solicitud }}"
-                                style="display: none;">
-                                {% for permiso in permisos %}
-                                {{ permiso.materia }}
-                                {% if not forloop.last %}, {% endif %}
-                                {% endfor %}
-                            </div>
+                            <button type="button" class="btn btn-primary toggle-button" onclick="toggleMaterias(this)">
+                                Ver Materias
+                            </button>
                         </td>
+                        
+                        <script>
+                            var popoverDiv; // Variable global para mantener la referencia al popover
+                        
+                            function toggleMaterias(btn) {
+                                // Cerrar el popover si ya está abierto
+                                if (popoverDiv) {
+                                    popoverDiv.remove();
+                                    popoverDiv = null;
+                                    return;
+                                }
+                        
+                                // Obtener el contenedor de materias
+                                var materiasContent = '{% for permiso in permisos %}- {{ permiso.materia }}<br>{% endfor %}';
+                        
+                                // Crear un div para el popover
+                                popoverDiv = document.createElement('div');
+                                popoverDiv.className = 'custom-popover';
+                                popoverDiv.innerHTML = `
+                                    <div class="popover-header">
+                                        <h6 class="popover-title">Tus Materias</h6>
+                                    </div>
+                                    <div class="popover-body" style="background-color: white; padding: 10px;">
+                                        ${materiasContent}
+                                    </div>
+                                `;
+                        
+                                // Posicionar el popover al lado del botón
+                                var rect = btn.getBoundingClientRect();
+                                popoverDiv.style.position = 'absolute';
+                                popoverDiv.style.top = rect.top + 'px';
+                                popoverDiv.style.left = rect.right + 'px';
+                        
+                                // Agregar el popover al body
+                                document.body.appendChild(popoverDiv);
+                        
+                                // Agregar un manejador de clic fuera del popover para cerrarlo
+                                document.addEventListener('click', function (e) {
+                                    if (!popoverDiv.contains(e.target) && e.target !== btn) {
+                                        popoverDiv.remove();
+                                        popoverDiv = null;
+                                        document.removeEventListener('click', arguments.callee);
+                                    }
+                                });
+                            }
+                        </script>                                                                
                         <td
                             class="{% if permisos.0.estado == 'Aceptado' %}table-success{% elif permisos.0.estado == 'Rechazado' %}table-danger{% elif permisos.0.estado == 'Pendiente' %}table-warning{% elif permisos.0.estado == 'Observado' %}table-info{% endif %}">
                             <strong>{{ permisos.0.estado }}</strong>
