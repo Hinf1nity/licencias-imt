@@ -29,7 +29,7 @@
             </ul>
         </div>
     </nav>
-    <div style="transform: scale(0.9); transform-origin: 0 0;" class="container mt-5">
+    <div style="transform: scale(0.85); transform-origin: 0 0;" class="container mt-5">
         <h1 class="mb-4">Peticiones Pendientes</h1>
         <table class="table">
             <thead>
@@ -48,96 +48,94 @@
                 </tr>
             </thead>
             <tbody>
-                {% for permiso, estudiante, materias in permisos %}
-                <tr>
-                    <td>{{ permiso.id }}</td>
-                    <td>{{ permiso.fecha }}</td>
-                    <td>{{ estudiante.ci }}</td>
-                    <td>{{ estudiante.email }}</td>
-                    <td>{{ estudiante.name }}</td>
-                    <td>{{ estudiante.apellido }}</td>
-                    <td>
-                        {% if permiso.justificacion %}
-                        <a href="{{ permiso.justificacion.url }}" target="_blank">View PDF</a>
-                        {% else %}
-                        No PDF
-                        {% endif %}
-                    </td>
-                    <td>{{ permiso.motivo }}</td>
-                    <td>{{ permiso.descripcion }}</td>
-                    <td>
-                        <style>
-                            .custom-width-btn {
-                                width: 90px;
-                                /* Puedes ajustar este valor según tus necesidades */
-                            }
-                        </style>
-                        <div class="d-flex flex-column mr-5">
-                            <form method="post" action="{% url 'petition_list' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
-                                <button type="submit" name='status' value='Aceptado'
-                                    class="btn btn-success btn-sm custom-width-btn">Aceptar</button>
-                            </form>
-                            <form method="post" action="{% url 'petition_list' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
-                                <button type="submit" name='status' value='Rechazado'
-                                    class="btn btn-danger btn-sm mt-2 custom-width-btn">Rechazar</button>
-                            </form>
-                            <form method="post" action="{% url 'petition_list' %}">
-                                {% csrf_token %}
-                                <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
-                                <button type="submit" name='status' value='Observado'
-                                    class="btn btn-info btn-sm mt-2 custom-width-btn">Observado</button>
-                            </form>
-                        </div>
-                    </td>
-
-                    <td>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="observacion{{ permiso.id }}"
-                                value="{{ permiso.observacion }}" style="width: 300px;margin-bottom: 10px;">
-                            <!-- Adjust the width as needed -->
-
-                            <div class="input-group-append">
-                                <button class="btn btn-primary update-observation"
-                                    data-petition-id="{{ permiso.id }}">Update</button>
+                {% for permiso in permisos %}
+                    <tr>
+                        <td>{{ permiso.permiso.id }}</td>
+                        <td>{{ permiso.permiso.fecha }}</td>
+                        <td>{{ permiso.estudiante.ci }}</td>
+                        <td>{{ permiso.estudiante.email }}</td>
+                        <td>{{ permiso.estudiante.name }}</td>
+                        <td>{{ permiso.estudiante.apellido }}</td>
+                        <td>
+                            {% if permiso.permiso.justificacion %}
+                                <a href="{{ permiso.justificacion.url }}" target="_blank">View PDF</a>
+                            {% else %}
+                                No PDF
+                            {% endif %}
+                        </td>
+                        <td>{{ permiso.permiso.motivo }}</td>
+                        <td>{{ permiso.permiso.descripcion }}</td>
+                        <td>
+                            <style>
+                                .custom-width-btn {
+                                    width: 90px;
+                                    /* Puedes ajustar este valor según tus necesidades */
+                                }
+                            </style>
+                            <div class="d-flex flex-column mr-5">
+                                <form method="post" action="{% url 'petition_list' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
+                                    <button type="submit" name='status' value='Aceptado'
+                                            class="btn btn-success btn-sm custom-width-btn">Aceptar</button>
+                                </form>
+                                <form method="post" action="{% url 'petition_list' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
+                                    <button type="submit" name='status' value='Rechazado'
+                                            class="btn btn-danger btn-sm mt-2 custom-width-btn">Rechazar</button>
+                                </form>
+                                <form method="post" action="{% url 'petition_list' %}">
+                                    {% csrf_token %}
+                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
+                                    <button type="submit" name='status' value='Observado'
+                                            class="btn btn-info btn-sm mt-2 custom-width-btn">Observado</button>
+                                </form>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <!-- Add a new row to display subjects and hours -->
-                <tr>
-                    <td colspan="15"> <!-- colspan="15" to span across all columns -->
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Materias</th>
-                                    <th>hora Inicio</th>
-                                    <th>hora Fin</th>
-                                    <th>Fecha permiso</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <!-- Loop through subjects within the 'permiso' object -->
-                                {% for materia,hI,hF,fecha in materias %}
-                                <tr>
-                                    <td>{{ materia }}</td>
-                                    <td>{{ hI }}</td>
-                                    <td>{{ hF }}</td>
-                                    <td>{{ fecha }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="15">
-                        <hr style="border-top: 5px solid #000;">
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="observacion{{ permiso.id }}"
+                                       value="{{ permiso.observacion }}" style="width: 300px;margin-bottom: 10px;">
+                                <!-- Adjust the width as needed -->
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary update-observation"
+                                            data-petition-id="{{ permiso.id }}">Update</button>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- Add a new row to display subjects and hours -->
+                    <tr>
+                        <td colspan="12">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Materias</th>
+                                        <th>hora Inicio</th>
+                                        <th>hora Fin</th>
+                                        <th>Fecha permiso</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loop through subjects within the 'permiso' object -->
+                                    {% for materia in permiso.materias %}
+                                    <tr>
+                                        <td>{{ materia.materia }}</td>
+                                        <td>{{ materia.horaInicio }}</td>
+                                        <td>{{ materia.horaFin }}</td>
+                                        <td>{{ materia.fecha }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="12">
+                            <hr style="border-top: 5px solid #000;">
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
