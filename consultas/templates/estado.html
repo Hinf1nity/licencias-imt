@@ -81,9 +81,12 @@
                                 requisitos necesarios para ser considerada válida por Dirección de Carrera.</div>
                             {% elif permisos.0.estado == 'Observado' %}
                             <div class="text-black" style="white-space: pre-line;">La solicitud fue observada y se deja
-                                a consideración del docente de la materia el aceptar o rechazar la solicitud.
+                                a consideración del docente de la materia el aceptar o rechazar la solicitud. Si desea
+                                añadir un comentario o un nuevo archivo, puede hacerlo con el boton añadir.
                             </div>
-                            <button class="btn btn-primary toggle-button">Añadir</button>
+                            <button type="button" class="btn btn-primary" id="ComentarioArchivo">
+                                Añadir
+                            </button>
                             {% endif %}
                         </td>
 
@@ -99,6 +102,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const toggleButtons = document.querySelectorAll(".toggle-button");
+        const comentario = document.getElementById("ComentarioArchivo");
 
         toggleButtons.forEach(button => {
             button.addEventListener("click", function () {
@@ -111,6 +115,40 @@
                     targetContainer.style.display = "none";
                 }
             });
+        });
+
+        comentario.addEventListener("click", function () {
+            const buttonContainer = this.parentNode;
+
+            const comentInput = document.createElement("div");
+            const pdfInput = document.createElement("div");
+            const button = document.createElement("div");
+            comentInput.innerHTML = '<textarea type="text" id="comentario" class="form-control" aria-label="Comentario" autocomplete="off">'
+            pdfInput.innerHTML = '<input type="file" id="pdfInput" class="form-control" aria-describedby="addon-wrapping" accept="application/pdf">'
+            button.innerHTML = '<button type="button" class="btn btn-success" id="RegistrarComentarioArchivo">Registrar</button>\
+            <button type="button" class="btn btn-danger" id="CancelarComentarioArchivo">Cancelar</button>'
+
+            buttonContainer.removeChild(comentario);
+            buttonContainer.appendChild(comentInput);
+            buttonContainer.appendChild(pdfInput);
+            buttonContainer.appendChild(button);
+            buttonContainer.appendChild(closeButtons);
+            const closeButtons = document.getElementById("CancelarComentarioArchivo");
+        });
+
+        closeButtons.addEventListener("click", function () {
+            const buttonContainer = this.parentNode;
+            const comentInput = document.getElementById("comentario");
+            const pdfInput = document.getElementById("pdfInput");
+            const button = document.getElementById("RegistrarComentarioArchivo");
+            const comentario = document.createElement("div");
+            comentario.innerHTML = '<button type="button" class="btn btn-primary" id="ComentarioArchivo">Añadir</button>'
+
+            buttonContainer.removeChild(comentInput);
+            buttonContainer.removeChild(pdfInput);
+            buttonContainer.removeChild(button);
+            buttonContainer.removeChild(closeButtons);
+            buttonContainer.appendChild(comentario);
         });
     });
 </script>
