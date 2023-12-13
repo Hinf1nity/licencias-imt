@@ -17,54 +17,61 @@
                 </thead>
                 <tbody>
                     {% for id_solicitud, permisos in grouped_permisos.items %}
-                        <tr>
-                            <td>
-                                <button class="btn btn-primary toggle-button" data-target="materiasContainer{{ id_solicitud }}">Ver Materia(s)</button>
-                                <div class="materiasContainer" id="materiasContainer{{ id_solicitud }}" style="display: none;">
-                                    {% for permiso in permisos %}
-                                        {{ permiso.materia }}
-                                        {% if not forloop.last %}, {% endif %}
-                                    {% endfor %}
-                                </div>
-                            </td>
-                            <td class="{% if permisos.0.estado == 'Aceptado' %}table-success{% elif permisos.0.estado == 'Rechazado' %}table-danger{% elif permisos.0.estado == 'Pendiente' %}table-warning{% elif permisos.0.estado == 'Observado' %}table-info{% endif %}">
-                                <strong>{{ permisos.0.estado }}</strong> {# Utilizamos permisos.0 para obtener el estado de la primera materia #}
-                                
-                                {% if permisos.0.estado == 'Aceptado' %}
-                                    <div class="text-black" style="white-space: pre-line;">La solicitud cuenta con los requisitos necesarios para ser considerada válida por Dirección de Carrera.</div>
-                                {% elif permisos.0.estado == 'Rechazado' %}
-                                    <div class="text-black" style="white-space: pre-line;">La solicitud no cuenta con los requisitos necesarios para ser considerada válida por Dirección de Carrera.</div>
-                                {% elif permisos.0.estado == 'Observado' %}
-                                    <div class="text-black" style="white-space: pre-line;">La solicitud fue observada y se deja a consideración del docente de la materia el aceptar o rechazar la solicitud.
-                                    </div>
-                                {% endif %}
-                            </td>
-                            
-                            <td>{{ permisos.0.fechaSolicitud }}</td>  {# Utilizamos permisos.0 para obtener la fecha de solicitud de la primera materia #}
-                            <td>{{ permisos.0.observaciones }}</td>
-                        </tr>
+                    <tr>
+                        <td>
+                            <button class="btn btn-primary toggle-button"
+                                data-target="materiasContainer{{ id_solicitud }}">Ver Materia(s)</button>
+                            <div class="materiasContainer" id="materiasContainer{{ id_solicitud }}"
+                                style="display: none;">
+                                {% for permiso in permisos %}
+                                {{ permiso.materia }}
+                                {% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </div>
+                        </td>
+                        <td
+                            class="{% if permisos.0.estado == 'Aceptado' %}table-success{% elif permisos.0.estado == 'Rechazado' %}table-danger{% elif permisos.0.estado == 'Pendiente' %}table-warning{% elif permisos.0.estado == 'Observado' %}table-info{% endif %}">
+                            <strong>{{ permisos.0.estado }}</strong>
+
+                            {% if permisos.0.estado == 'Aceptado' %}
+                            <div class="text-black" style="white-space: pre-line;">La solicitud cuenta con los
+                                requisitos necesarios para ser considerada válida por Dirección de Carrera.</div>
+                            {% elif permisos.0.estado == 'Rechazado' %}
+                            <div class="text-black" style="white-space: pre-line;">La solicitud no cuenta con los
+                                requisitos necesarios para ser considerada válida por Dirección de Carrera.</div>
+                            {% elif permisos.0.estado == 'Observado' %}
+                            <div class="text-black" style="white-space: pre-line;">La solicitud fue observada y se deja
+                                a consideración del docente de la materia el aceptar o rechazar la solicitud.
+                            </div>
+                            <button class="btn btn-primary toggle-button">Añadir</button>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ permisos.0.fechaSolicitud }}</td>
+                        <td>{{ permisos.0.observaciones }}</td>
+                    </tr>
                     {% endfor %}
-                </tbody>                
+                </tbody>
             </table>
         </div>
     </div>
 </div>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const toggleButtons = document.querySelectorAll(".toggle-button");
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleButtons = document.querySelectorAll(".toggle-button");
 
-    toggleButtons.forEach(button => {
-        button.addEventListener("click", function() {
-            const targetId = this.getAttribute("data-target");
-            const targetContainer = document.getElementById(targetId);
+        toggleButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                const targetId = this.getAttribute("data-target");
+                const targetContainer = document.getElementById(targetId);
 
-            if (targetContainer.style.display === "none" || targetContainer.style.display === "") {
-                targetContainer.style.display = "block";
-            } else {
-                targetContainer.style.display = "none";
-            }
+                if (targetContainer.style.display === "none" || targetContainer.style.display === "") {
+                    targetContainer.style.display = "block";
+                } else {
+                    targetContainer.style.display = "none";
+                }
+            });
         });
     });
-});
 </script>
 {% endblock %}
