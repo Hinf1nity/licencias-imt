@@ -16,6 +16,9 @@ class AdminOnlyView(LoginRequiredMixin, View):
     def get(self, request):
         if request.user.is_staff:
             permisos = RegistroPermisos.objects.filter(estado='Pendiente').select_related('project')
+            ids = []
+            for permiso in permisos:
+                ids.append(permiso.id_solicitud)
 
             # Organizar permisos en un diccionario
             permisos_dict = {}
@@ -35,6 +38,35 @@ class AdminOnlyView(LoginRequiredMixin, View):
             return render(request, 'petitions/petition_list.html', {'permisos': permisos_list})
         else:
             return render(request, 'petitions/not_authorized.html')
+    def post(self, request):
+        if request.POST.get('_method') == 'put':
+            petition_id = request.POST.get('petition_id')
+            observation = request.POST.get('observation')
+
+            # Retrieve the object to update using the petition_id
+            obj_to_update = get_object_or_404(RegistroPermisos, id=petition_id)
+
+            # Update the observation field
+            obj_to_update.observaciones = observation
+
+            # Save the changes to the object
+            obj_to_update.save()
+
+            # Return a JSON response to indicate success
+            return JsonResponse({'message': 'Observation updated successfully'})
+        else:
+            permiso_id = request.POST.get('permisoid_solicitud')
+            new_status = request.POST.get('status')
+
+            permisos = RegistroPermisos.objects.filter(id_solicitud=permiso_id)
+            if new_status == 'Aceptado' or new_status == 'Rechazado' or new_status == 'Observado':
+                for i in permisos:
+                    form = RegistroPermisosForm(request.POST, instance=i)
+                for i in permisos:
+                    i.estado = new_status
+                    i.save()
+
+            return redirect('petition_list')
 
 
 class UpdateObservationView(View):

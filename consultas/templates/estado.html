@@ -4,6 +4,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h1 class="text-center">Estado de Solicitudes de Permisos Realizadas por el Estudiante</h1>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
         </div>
         <div class="text-center col-md-64">
             <table class="table">
@@ -19,56 +23,17 @@
                     {% for id_solicitud, permisos in grouped_permisos.items %}
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-primary toggle-button" onclick="toggleMaterias(this)">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="popover" title="Tus Materias">
                                 Ver Materias
                             </button>
+
+                            <div class="materias-content" data-solicitud-id="{{ id_solicitud }}" style="display: none;">
+                                {% for materia in permisos %}
+                                    {{ materia.materia }}{% if not forloop.last %}<br>{% endif %}
+                                {% endfor %}
+                            </div>
                         </td>
-                        
-                        <script>
-                            var popoverDiv; // Variable global para mantener la referencia al popover
-                        
-                            function toggleMaterias(btn) {
-                                // Cerrar el popover si ya está abierto
-                                if (popoverDiv) {
-                                    popoverDiv.remove();
-                                    popoverDiv = null;
-                                    return;
-                                }
-                        
-                                // Obtener el contenedor de materias
-                                var materiasContent = '{% for permiso in permisos %}- {{ permiso.materia }}<br>{% endfor %}';
-                        
-                                // Crear un div para el popover
-                                popoverDiv = document.createElement('div');
-                                popoverDiv.className = 'custom-popover';
-                                popoverDiv.innerHTML = `
-                                    <div class="popover-header">
-                                        <h6 class="popover-title">Tus Materias</h6>
-                                    </div>
-                                    <div class="popover-body" style="background-color: white; padding: 10px;">
-                                        ${materiasContent}
-                                    </div>
-                                `;
-                        
-                                // Posicionar el popover al lado del botón
-                                var rect = btn.getBoundingClientRect();
-                                popoverDiv.style.position = 'absolute';
-                                popoverDiv.style.top = rect.top + 'px';
-                                popoverDiv.style.left = rect.right + 'px';
-                        
-                                // Agregar el popover al body
-                                document.body.appendChild(popoverDiv);
-                        
-                                // Agregar un manejador de clic fuera del popover para cerrarlo
-                                document.addEventListener('click', function (e) {
-                                    if (!popoverDiv.contains(e.target) && e.target !== btn) {
-                                        popoverDiv.remove();
-                                        popoverDiv = null;
-                                        document.removeEventListener('click', arguments.callee);
-                                    }
-                                });
-                            }
-                        </script>                                                                
+
                         <td
                             class="{% if permisos.0.estado == 'Aceptado' %}table-success{% elif permisos.0.estado == 'Rechazado' %}table-danger{% elif permisos.0.estado == 'Pendiente' %}table-warning{% elif permisos.0.estado == 'Observado' %}table-info{% endif %}">
                             <strong>{{ permisos.0.estado }}</strong>
@@ -82,7 +47,7 @@
                             {% elif permisos.0.estado == 'Observado' %}
                             <div class="text-black" style="white-space: pre-line;">La solicitud fue observada y se deja
                                 a consideración del docente de la materia el aceptar o rechazar la solicitud. Si desea
-                                añadir un comentario o un nuevo archivo, puede hacerlo con el boton añadir.
+                                añadir un comentario o un nuevo archivo, puede hacerlo con el botón añadir.
                             </div>
                             <button type="button" class="btn btn-primary" id="ComentarioArchivo">
                                 Añadir
@@ -99,20 +64,34 @@
         </div>
     </div>
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl, {
+                content: function () {
+                    var materiasContent = popoverTriggerEl.nextElementSibling.cloneNode(true);
+                    materiasContent.style.display = 'block';  // Mostrar el contenido
+                    return materiasContent.outerHTML;
+                },
+                html: true  // Indicar que el contenido es HTML
+            })
+        });
+
         const toggleButtons = document.querySelectorAll(".toggle-button");
         const comentario = document.getElementById("ComentarioArchivo");
 
         toggleButtons.forEach(button => {
             button.addEventListener("click", function () {
-                const targetId = this.getAttribute("data-target");
-                const targetContainer = document.getElementById(targetId);
+                const solicitudId = this.getAttribute("data-solicitud-id");
+                const materiasContent = document.querySelector(`.materias-content[data-solicitud-id="${solicitudId}"]`);
 
-                if (targetContainer.style.display === "none" || targetContainer.style.display === "") {
-                    targetContainer.style.display = "block";
+                // Toggle the visibility of materias content
+                if (materiasContent.style.display === "none" || materiasContent.style.display === "") {
+                    materiasContent.style.display = "block";
                 } else {
-                    targetContainer.style.display = "none";
+                    materiasContent.style.display = "none";
                 }
             });
         });
@@ -123,17 +102,19 @@
             const comentInput = document.createElement("div");
             const pdfInput = document.createElement("div");
             const button = document.createElement("div");
-            comentInput.innerHTML = '<textarea type="text" id="comentario" class="form-control" aria-label="Comentario" autocomplete="off">'
-            pdfInput.innerHTML = '<input type="file" id="pdfInput" class="form-control" aria-describedby="addon-wrapping" accept="application/pdf">'
+            const closeButtons = document.createElement("div");
+
+            comentInput.innerHTML = '<textarea type="text" id="comentario" class="form-control" aria-label="Comentario" autocomplete="off"></textarea>';
+            pdfInput.innerHTML = '<input type="file" id="pdfInput" class="form-control" aria-describedby="addon-wrapping" accept="application/pdf">';
             button.innerHTML = '<button type="button" class="btn btn-success" id="RegistrarComentarioArchivo">Registrar</button>\
-            <button type="button" class="btn btn-danger" id="CancelarComentarioArchivo">Cancelar</button>'
+            <button type="button" class="btn btn-danger" id="CancelarComentarioArchivo">Cancelar</button>';
+            closeButtons.innerHTML = '<button type="button" class="btn btn-danger" id="CancelarComentarioArchivo">Cancelar</button>';
 
             buttonContainer.removeChild(comentario);
             buttonContainer.appendChild(comentInput);
             buttonContainer.appendChild(pdfInput);
             buttonContainer.appendChild(button);
             buttonContainer.appendChild(closeButtons);
-            const closeButtons = document.getElementById("CancelarComentarioArchivo");
         });
 
         closeButtons.addEventListener("click", function () {
@@ -142,7 +123,7 @@
             const pdfInput = document.getElementById("pdfInput");
             const button = document.getElementById("RegistrarComentarioArchivo");
             const comentario = document.createElement("div");
-            comentario.innerHTML = '<button type="button" class="btn btn-primary" id="ComentarioArchivo">Añadir</button>'
+            comentario.innerHTML = '<button type="button" class="btn btn-primary" id="ComentarioArchivo">Añadir</button>';
 
             buttonContainer.removeChild(comentInput);
             buttonContainer.removeChild(pdfInput);

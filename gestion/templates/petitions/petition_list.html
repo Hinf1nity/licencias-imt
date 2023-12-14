@@ -75,19 +75,19 @@
                             <div class="d-flex flex-column mr-5">
                                 <form method="post" action="{% url 'petition_list' %}">
                                     {% csrf_token %}
-                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
+                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.permiso.id_solicitud }}>
                                     <button type="submit" name='status' value='Aceptado'
                                             class="btn btn-success btn-sm custom-width-btn">Aceptar</button>
                                 </form>
                                 <form method="post" action="{% url 'petition_list' %}">
                                     {% csrf_token %}
-                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
+                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.permiso.id_solicitud }}>
                                     <button type="submit" name='status' value='Rechazado'
                                             class="btn btn-danger btn-sm mt-2 custom-width-btn">Rechazar</button>
                                 </form>
                                 <form method="post" action="{% url 'petition_list' %}">
                                     {% csrf_token %}
-                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.id_solicitud }}>
+                                    <input type="hidden" name='permisoid_solicitud' value={{ permiso.permiso.id_solicitud }}>
                                     <button type="submit" name='status' value='Observado'
                                             class="btn btn-info btn-sm mt-2 custom-width-btn">Observado</button>
                                 </form>
@@ -95,12 +95,12 @@
                         </td>
                         <td>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="observacion{{ permiso.id }}"
-                                       value="{{ permiso.observacion }}" style="width: 300px;margin-bottom: 10px;">
+                                <input type="text" class="form-control" id="observacion{{ permiso.permiso.id }}"
+                                       value="{{ permiso.permiso.observacion }}" style="width: 300px;margin-bottom: 10px;">
                                 <!-- Adjust the width as needed -->
                                 <div class="input-group-append">
                                     <button class="btn btn-primary update-observation"
-                                            data-petition-id="{{ permiso.id }}">Update</button>
+                                            data-petition-id="{{ permiso.permiso.id }}">Update</button>
                                 </div>
                             </div>
                         </td>
