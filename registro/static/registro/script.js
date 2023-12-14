@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         '-horaFin" aria-describedby="addon-wrapping" class="form-control">',
       '<input type="date" name="permisos-' +
         permisoCount +
-        '-fecha" aria-describedby="addon-wrapping" class="form-control">',
+        '-fecha" aria-describedby="addon-wrapping" class="form-control" onkeydown="return false;" onfocus=\'(this.type="date")\'>',
     ];
 
     let labels = [
@@ -87,3 +87,51 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("form-permisos").submit();
   });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Función para aplicar el filtrado de fechas
+  function aplicarFiltrado() {
+      // Obtén todos los elementos de entrada de fecha
+      var fechaInputs = document.querySelectorAll('input[type="date"]');
+      console.log("funciona")
+
+      // Itera sobre los elementos de entrada de fecha y establece los atributos
+      fechaInputs.forEach(function (fechaInput) {
+          // Configura la fecha mínima permitida para cada campo de fecha
+          var fechaActual = new Date();
+          var fechaMinima = new Date(fechaActual);
+          fechaMinima.setDate(fechaActual.getDate() - 20);
+
+          // Convierte la fecha mínima a formato ISO (YYYY-MM-DD)
+          var fechaMinimaISO = fechaMinima.toISOString().split('T')[0];
+
+          fechaInput.setAttribute('min', fechaMinimaISO);
+          
+          // Agrega un manejador de eventos para prevenir la edición manual
+          fechaInput.addEventListener('keydown', prevenirEdicionManual);
+      });
+  }
+
+  // Función para prevenir la edición manual de la fecha
+  function prevenirEdicionManual(event) {
+      event.preventDefault();
+  }
+
+  // Aplicar el filtrado al cargar la página
+  aplicarFiltrado();
+
+  // Observador de mutaciones para detectar nuevos elementos de entrada de fecha
+  var observer = new MutationObserver(function (mutations) {
+      mutations.forEach(function (mutation) {
+          if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+              // Si se agregan nuevos nodos, aplicar el filtrado nuevamente
+              aplicarFiltrado();
+          }
+      });
+  });
+
+  // Configurar el observador para observar cambios en el cuerpo del documento
+  observer.observe(document.body, { childList: true, subtree: true });
+});
+
