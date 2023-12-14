@@ -5,14 +5,10 @@
     <h1 class="text-center mb-4">Ingrese su Carnet de Identidad</h1>
     <form method="POST" action="{% url 'estado' %}">
       {% csrf_token %}
+      <input type="hidden" name="metodo" value="post">
       <div class="input-group mb-3">
-        <input
-          type="text"
-          name="carnet"
-          class="form-control"
-          placeholder="Número de Carnet de Identidad"
-          aria-label="Número de Carnet"
-        />
+        <input type="text" name="carnet" class="form-control" placeholder="Número de Carnet de Identidad"
+          aria-label="Número de Carnet" />
         <div class="input-group-append">
           <button type="submit" class="btn btn-success">Consultar</button>
         </div>

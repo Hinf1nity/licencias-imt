@@ -58,7 +58,12 @@
                     <td>{{ estudiante.apellido }}</td>
                     <td>
                         {% if permiso.justificacion %}
-                        <a href="{{ permiso.justificacion.url }}" target="_blank">View PDF</a>
+                        <a href="{{ permiso.justificacion.url }}" target="_blank">Ver PDF</a>
+                        {% else %}
+                        No PDF
+                        {% endif %}
+                        {% if permiso.justificacion2 %}
+                        <a href="{{ permiso.justificacion2.url }}" target="_blank">Ver PDF</a>
                         {% else %}
                         No PDF
                         {% endif %}

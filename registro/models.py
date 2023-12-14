@@ -45,6 +45,9 @@ class permisos(models.Model):
     justificacion = models.FileField(
         upload_to=custom_upload_to, null=True, blank=True)
     descripcion = models.TextField(null=True, blank=True)
+    comentario = models.TextField(null=True, blank=True)
+    justificacion2 = models.FileField(
+        upload_to=custom_upload_to, null=True, blank=True, default=' ')
     fechaSolicitud = models.DateField(auto_now_add=True)
     estado = models.CharField(
         max_length=10, choices=STATUS_CHOICES, default='Pendiente')
