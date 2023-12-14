@@ -4,6 +4,10 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <h1 class="text-center">Estado de Solicitudes de Permisos Realizadas por el Estudiante</h1>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css">
+            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
         </div>
         <div class="text-center col-md-64">
             <table class="table">
@@ -19,9 +23,15 @@
                     {% for id_solicitud, permisos in grouped_permisos.items %}
                     <tr>
                         <td>
-                            <button type="button" class="btn btn-primary toggle-button" onclick="toggleMaterias(this)">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="popover" title="Tus Materias">
                                 Ver Materias
                             </button>
+
+                            <div class="materias-content" data-solicitud-id="{{ id_solicitud }}" style="display: none;">
+                                {% for materia in permisos %}
+                                {{ materia.materia }}{% if not forloop.last %}<br>{% endif %}
+                                {% endfor %}
+                            </div>
                         </td>
 
                         <script>
@@ -119,8 +129,21 @@
         </div>
     </div>
 </div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+            return new bootstrap.Popover(popoverTriggerEl, {
+                content: function () {
+                    var materiasContent = popoverTriggerEl.nextElementSibling.cloneNode(true);
+                    materiasContent.style.display = 'block';  // Mostrar el contenido
+                    return materiasContent.outerHTML;
+                },
+                html: true  // Indicar que el contenido es HTML
+            })
+        });
+
         const toggleComentario = document.getElementById("ComentarioArchivo");
         const toggleCancel = document.getElementById("CancelarComentarioArchivo");
         const cuadro = document.getElementById("Comentario");
@@ -129,12 +152,12 @@
         toggleComentario.addEventListener("click", function () {
             cuadro.style.display = "block";
             cuadroBis.style.display = "none";
-        });
 
-        toggleCancel.addEventListener("click", function () {
-            cuadro.style.display = "none";
-            cuadroBis.style.display = "block";
+
+            toggleCancel.addEventListener("click", function () {
+                cuadro.style.display = "none";
+                cuadroBis.style.display = "block";
+            });
         });
-    });
 </script>
 {% endblock %}
