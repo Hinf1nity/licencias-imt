@@ -68,7 +68,13 @@
                         {% endif %}
                     </td>
                     <td>{{ permiso.permiso.motivo }}</td>
+                    {% if permiso.permiso.comentario != ' ' and permiso.permiso.comentario != "Null" %}
+                    <td>{{ permiso.permiso.descripcion }}<br>
+                        <strong>Comentario: </strong> {{ permiso.permiso.comentario}}
+                    </td>
+                    {% else %}
                     <td>{{ permiso.permiso.descripcion }}</td>
+                    {% endif %}
                     <td>
                         <style>
                             .custom-width-btn {
