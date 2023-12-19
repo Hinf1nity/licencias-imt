@@ -6,132 +6,113 @@ document.addEventListener("DOMContentLoaded", function () {
   let permisoCount = window.permisoCount;
 
   addButton.addEventListener("click", function () {
-    const newRow = document.createElement("tr");
-    newRow.className = "permiso-fila";
+      const newRow = document.createElement("tr");
+      newRow.className = "permiso-fila";
 
-    let campos = [
-      '<select class="form-select" name="permisos-' +
-        permisoCount +
-        '-materia" aria-label="Default select example">\
-        <option selected>-</option>\
-        <option value="Automatización Industrial">Automatización Industrial</option>\
-        <option value="Autotrónica">Autotrónica</option>\
-        <option value="Circuitos Digitales">Circuitos Digitales</option>\
-        <option value="Circuitos Electrónicos I">Circuitos Electrónicos I</option>\
-        <option value="Circuitos Electrónicos II">Circuitos Electrónicos II</option>\
-        <option value="Circuitos Electrónicos III">Circuitos Electrónicos III</option>\
-        <option value="Control I">Control I</option>\
-        <option value="Control II">Control II</option>\
-        <option value="Diseño de Máquinas">Diseño de Máquinas</option>\
-        <option value="Diseño Superior de Ingenieria">Diseño Superior de Ingenieria</option>\
-        <option value="Electrónica de Potencia">Electrónica de Potencia</option>\
-        <option value="Fundamentos de Control">Fundamentos de Control</option>\
-        <option value="Instrumentación Industrial">Instrumentación Industrial</option>\
-        <option value="Introducción a la Ing. Mecatrónica">Introducción a la Ing.Mecatrónica</option>\
-        <option value="Manufatura Integrada">Manufatura Integrada</option>\
-        <option value="Máquinas Eléctricas">Máquinas Eléctricas</option>\
-        <option value="Mecanismos">Mecanismos</option>\
-        <option value="Neumática e Hidráulica">Neumática e Hidráulica</option>\
-        <option value="Prácticas Preprofesionales">Prácticas Preprofesionales</option>\
-        <option value="Programación Superior">Programación Superior</option>\
-        <option value="Prototipado Rápido">Prototipado Rápido</option>\
-        <option value="Robótica">Robótica</option>\
-        <option value="Señales y Sistemas">Señales y Sistemas</option>\
-        <option value="Sistemas Embebidos I">Sistemas Embebidos I</option>\
-        <option value="Sistemas Embebidos II">Sistemas Embebidos II</option>\
-        <option value="Taller de Grado I">Taller de Grado I</option>\
-        <option value="Taller de Grado II">Taller de Grado II</option>\
-        <option value="Tecnología Mecánica">Tecnología Mecánica</option>\
-        <option value="Visión Artificial">Visión Artificial</option>\
-        </select>',
-      '<input type="time" name="permisos-' +
-        permisoCount +
-        '-horaInicio" aria-describedby="addon-wrapping" class="form-control">',
-      '<input type="time" name="permisos-' +
-        permisoCount +
-        '-horaFin" aria-describedby="addon-wrapping" class="form-control">',
-      '<input type="date" name="permisos-' +
-        permisoCount +
-        '-fecha" aria-describedby="addon-wrapping" class="form-control" onkeydown="return false;" onfocus=\'(this.type="date")\'>',
-    ];
+      let campos = [
+          '<select class="form-select" name="permisos-' +
+            permisoCount +
+            '-materia" aria-label="Default select example">\
+            <option selected>-</option>\
+            <option value="Automatización Industrial">Automatización Industrial</option>\
+            <option value="Autotrónica">Autotrónica</option>\
+            <option value="Circuitos Digitales">Circuitos Digitales</option>\
+            <option value="Circuitos Electrónicos I">Circuitos Electrónicos I</option>\
+            <option value="Circuitos Electrónicos II">Circuitos Electrónicos II</option>\
+            <option value="Circuitos Electrónicos III">Circuitos Electrónicos III</option>\
+            <option value="Control I">Control I</option>\
+            <option value="Control II">Control II</option>\
+            <option value="Diseño de Máquinas">Diseño de Máquinas</option>\
+            <option value="Diseño Superior de Ingenieria">Diseño Superior de Ingenieria</option>\
+            <option value="Electrónica de Potencia">Electrónica de Potencia</option>\
+            <option value="Fundamentos de Control">Fundamentos de Control</option>\
+            <option value="Instrumentación Industrial">Instrumentación Industrial</option>\
+            <option value="Introducción a la Ing. Mecatrónica">Introducción a la Ing.Mecatrónica</option>\
+            <option value="Manufatura Integrada">Manufatura Integrada</option>\
+            <option value="Máquinas Eléctricas">Máquinas Eléctricas</option>\
+            <option value="Mecanismos">Mecanismos</option>\
+            <option value="Neumática e Hidráulica">Neumática e Hidráulica</option>\
+            <option value="Prácticas Preprofesionales">Prácticas Preprofesionales</option>\
+            <option value="Programación Superior">Programación Superior</option>\
+            <option value="Prototipado Rápido">Prototipado Rápido</option>\
+            <option value="Robótica">Robótica</option>\
+            <option value="Señales y Sistemas">Señales y Sistemas</option>\
+            <option value="Sistemas Embebidos I">Sistemas Embebidos I</option>\
+            <option value="Sistemas Embebidos II">Sistemas Embebidos II</option>\
+            <option value="Taller de Grado I">Taller de Grado I</option>\
+            <option value="Taller de Grado II">Taller de Grado II</option>\
+            <option value="Tecnología Mecánica">Tecnología Mecánica</option>\
+            <option value="Visión Artificial">Visión Artificial</option>\
+            </select>',
+          '<input type="time" name="permisos-' +
+            permisoCount +
+          '-horaInicio" aria-describedby="addon-wrapping" class="form-control">',
+          '<input type="time" name="permisos-' +
+          permisoCount +
+          '-horaFin" aria-describedby="addon-wrapping" class="form-control">',
+          '<input type="date" name="permisos-' +
+          permisoCount +
+          '-fecha" aria-describedby="addon-wrapping" class="form-control date-input" onkeydown="return false;" onfocus=\'(this.type="date")\'>',
+      ];
 
-    let labels = [
-      '<label for="id_permisos-' + permisoCount + '-materia"></label>\n',
-      '<label for="id_permisos-' + permisoCount + '-horaInicio"></label>\n',
-      '<label for="id_permisos-' + permisoCount + '-horaFin"></label>\n',
-      '<label for="id_permisos-' + permisoCount + '-fecha"></label>\n',
-    ];
+      let labels = [
+          '<label for="id_permisos-' + permisoCount + '-materia"></label>\n',
+          '<label for="id_permisos-' + permisoCount + '-horaInicio"></label>\n',
+          '<label for="id_permisos-' + permisoCount + '-horaFin"></label>\n',
+          '<label for="id_permisos-' + permisoCount + '-fecha"></label>\n',
+      ];
 
-    newRow.innerHTML = '<th scope="row">' + (permisoCount + 1) + "</th>";
-    for (let i = 0; i < campos.length; i++) {
-      const divisorCampo = document.createElement("td");
-      divisorCampo.innerHTML = labels[i] + campos[i];
-      newRow.appendChild(divisorCampo);
-    }
-    tbody.appendChild(newRow);
-    permisoCount++;
-    document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
-  });
-  deleteButton.addEventListener("click", function () {
-    const permisos = tbody.querySelectorAll(".permiso-fila");
-    if (permisos.length > 1) {
-      const lastPermiso = tbody.querySelector(".permiso-fila:last-child");
-      if (lastPermiso) {
-        tbody.removeChild(lastPermiso);
-        permisoCount--;
-        document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
+      newRow.innerHTML = '<th scope="row">' + (permisoCount + 1) + "</th>";
+      for (let i = 0; i < campos.length; i++) {
+          const divisorCampo = document.createElement("td");
+          divisorCampo.innerHTML = labels[i] + campos[i];
+          newRow.appendChild(divisorCampo);
       }
-    }
+
+      tbody.appendChild(newRow);
+      permisoCount++;
+      document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
+      applyDateRestrictions(); // Aplicar restricciones de fecha a todas las filas
   });
-  confirmButton.addEventListener("click", function () {
-    document.getElementById("form-permisos").submit();
-  });
-});
 
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Función para aplicar el filtrado de fechas
-  function aplicarFiltrado() {
-      // Obtén todos los elementos de entrada de fecha
-      var fechaInputs = document.querySelectorAll('input[type="date"]');
-      console.log("funciona")
-
-      // Itera sobre los elementos de entrada de fecha y establece los atributos
-      fechaInputs.forEach(function (fechaInput) {
-          // Configura la fecha mínima permitida para cada campo de fecha
-          var fechaActual = new Date();
-          var fechaMinima = new Date(fechaActual);
-          fechaMinima.setDate(fechaActual.getDate() - 20);
-
-          // Convierte la fecha mínima a formato ISO (YYYY-MM-DD)
-          var fechaMinimaISO = fechaMinima.toISOString().split('T')[0];
-
-          fechaInput.setAttribute('min', fechaMinimaISO);
-          
-          // Agrega un manejador de eventos para prevenir la edición manual
-          fechaInput.addEventListener('keydown', prevenirEdicionManual);
-      });
-  }
-
-  // Función para prevenir la edición manual de la fecha
-  function prevenirEdicionManual(event) {
-      event.preventDefault();
-  }
-
-  // Aplicar el filtrado al cargar la página
-  aplicarFiltrado();
-
-  // Observador de mutaciones para detectar nuevos elementos de entrada de fecha
-  var observer = new MutationObserver(function (mutations) {
-      mutations.forEach(function (mutation) {
-          if (mutation.addedNodes && mutation.addedNodes.length > 0) {
-              // Si se agregan nuevos nodos, aplicar el filtrado nuevamente
-              aplicarFiltrado();
+  deleteButton.addEventListener("click", function () {
+      const permisos = tbody.querySelectorAll(".permiso-fila");
+      if (permisos.length > 1) {
+          const lastPermiso = tbody.querySelector(".permiso-fila:last-child");
+          if (lastPermiso) {
+              tbody.removeChild(lastPermiso);
+              permisoCount--;
+              document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
+              applyDateRestrictions(); // Aplicar restricciones de fecha después de eliminar una fila
           }
-      });
+      }
   });
 
-  // Configurar el observador para observar cambios en el cuerpo del documento
-  observer.observe(document.body, { childList: true, subtree: true });
-});
+  confirmButton.addEventListener("click", function () {
+      document.getElementById("form-permisos").submit();
+  });
 
+  // Aplicar restricciones de fecha inicial
+  applyDateRestrictions();
+
+  // Función para aplicar restricciones de fecha
+  function applyDateRestrictions() {
+      const dateInputs = document.querySelectorAll('.date-input');
+      const maxDate = new Date();
+      maxDate.setDate(maxDate.getDate() - 20); // Restringe a 20 días atrás desde la fecha actual
+
+      dateInputs.forEach(function (dateInput) {
+          dateInput.min = maxDate.toISOString().split('T')[0];
+
+          // Desactivar edición manual
+          dateInput.addEventListener("keydown", function (event) {
+              event.preventDefault();
+          });
+
+          // Desactivar el calendario desplegable en la entrada de fecha
+          dateInput.addEventListener("click", function () {
+              this.blur(); // Desenfocar la entrada para evitar que se abra el calendario
+          });
+      });
+  }
+});
