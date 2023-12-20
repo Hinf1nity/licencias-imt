@@ -90,7 +90,7 @@
                 <div class="fieldWrapper col">
                     <div class="input-group flex-nowrap">
                         <label for="id_permisos-0-justificacion" class="input-group-text">Ingrese PDF</label>
-                        <input type="file" name="permisos-0-justificacion" id="id_permisos-0-justificacion"
+                        <input type="file" name="permisos-0-justificacion" required id="id_permisos-0-justificacion"
                             class="form-control" aria-describedby="addon-wrapping">
                     </div>
                 </div>
@@ -197,17 +197,17 @@
                             <td>
                                 <label for="id_permisos-0-horaInicio"></label>
                                 <input type="time" name="permisos-0-horaInicio" aria-describedby="addon-wrapping"
-                                    class="form-control">
+                                    class="form-control" required>
                             </td>
                             <td>
                                 <label for="id_permisos-0-horaFin"></label>
                                 <input type="time" name="permisos-0-horaFin" aria-describedby="addon-wrapping"
-                                    class="form-control">
+                                    class="form-control" required>
                             </td>
                             <td>
                                 <label for="id_permisos-0-fecha"></label>
-                                <input type="date" name="permisos-0-fecha" class="form-control date-input">
-                            </td>                       
+                                <input type="date" name="permisos-0-fecha" class="form-control date-input" required>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
