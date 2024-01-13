@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", function () {
   let permisoCount = window.permisoCount;
 
   addButton.addEventListener("click", function () {
-      const newRow = document.createElement("tr");
-      newRow.className = "permiso-fila";
+    const newRow = document.createElement("tr");
+    newRow.className = "permiso-fila";
 
-      let campos = [
-          '<select class="form-select" name="permisos-' +
-            permisoCount +
-            '-materia" aria-label="Default select example">\
+    let campos = [
+      '<select class="form-select" name="permisos-' +
+        permisoCount +
+        '-materia" aria-label="Default select example">\
             <option selected>-</option>\
             <option value="Automatización Industrial">Automatización Industrial</option>\
             <option value="Autotrónica">Autotrónica</option>\
@@ -44,75 +44,84 @@ document.addEventListener("DOMContentLoaded", function () {
             <option value="Tecnología Mecánica">Tecnología Mecánica</option>\
             <option value="Visión Artificial">Visión Artificial</option>\
             </select>',
-          '<input type="time" name="permisos-' +
-            permisoCount +
-          '-horaInicio" aria-describedby="addon-wrapping" class="form-control">',
-          '<input type="time" name="permisos-' +
-          permisoCount +
-          '-horaFin" aria-describedby="addon-wrapping" class="form-control">',
-          '<input type="date" name="permisos-' +
-          permisoCount +
-          '-fecha" aria-describedby="addon-wrapping" class="form-control date-input" onkeydown="return false;" onfocus=\'(this.type="date")\'>',
-      ];
+      '<input type="time" name="permisos-' +
+        permisoCount +
+        '-horaInicio" aria-describedby="addon-wrapping" class="form-control" />',
+      '<input type="time" name="permisos-' +
+        permisoCount +
+        '-horaFin" aria-describedby="addon-wrapping" class="form-control" />',
+      '<input type="date" name="permisos-' +
+        permisoCount +
+        '-fecha" aria-describedby="addon-wrapping" class="form-control date-input" onkeydown="return false;" onfocus=\'(this.type="date")\' />',
+    ];
 
-      let labels = [
-          '<label for="id_permisos-' + permisoCount + '-materia"></label>\n',
-          '<label for="id_permisos-' + permisoCount + '-horaInicio"></label>\n',
-          '<label for="id_permisos-' + permisoCount + '-horaFin"></label>\n',
-          '<label for="id_permisos-' + permisoCount + '-fecha"></label>\n',
-      ];
+    let labels = [
+      '<label for="id_permisos-' + permisoCount + '-materia"></label>\n',
+      '<label for="id_permisos-' + permisoCount + '-horaInicio"></label>\n',
+      '<label for="id_permisos-' + permisoCount + '-horaFin"></label>\n',
+      '<label for="id_permisos-' + permisoCount + '-fecha"></label>\n',
+    ];
 
-      newRow.innerHTML = '<th scope="row">' + (permisoCount + 1) + "</th>";
-      for (let i = 0; i < campos.length; i++) {
-          const divisorCampo = document.createElement("td");
-          divisorCampo.innerHTML = labels[i] + campos[i];
-          newRow.appendChild(divisorCampo);
-      }
+    newRow.innerHTML = '<th scope="row">' + (permisoCount + 1) + "</th>";
+    for (let i = 0; i < campos.length; i++) {
+      const divisorCampo = document.createElement("td");
+      divisorCampo.innerHTML = labels[i] + campos[i];
+      newRow.appendChild(divisorCampo);
+    }
 
-      tbody.appendChild(newRow);
-      permisoCount++;
-      document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
-      applyDateRestrictions(); // Aplicar restricciones de fecha a todas las filas
+    tbody.appendChild(newRow);
+    permisoCount++;
+    document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
+    applyDateRestrictions(); // Aplicar restricciones de fecha a todas las filas
   });
 
   deleteButton.addEventListener("click", function () {
-      const permisos = tbody.querySelectorAll(".permiso-fila");
-      if (permisos.length > 1) {
-          const lastPermiso = tbody.querySelector(".permiso-fila:last-child");
-          if (lastPermiso) {
-              tbody.removeChild(lastPermiso);
-              permisoCount--;
-              document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
-              applyDateRestrictions(); // Aplicar restricciones de fecha después de eliminar una fila
-          }
+    const permisos = tbody.querySelectorAll(".permiso-fila");
+    if (permisos.length > 1) {
+      const lastPermiso = tbody.querySelector(".permiso-fila:last-child");
+      if (lastPermiso) {
+        tbody.removeChild(lastPermiso);
+        permisoCount--;
+        document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
       }
+    }
   });
 
   confirmButton.addEventListener("click", function () {
-      document.getElementById("form-permisos").submit();
+    document.getElementById("form-permisos").submit();
   });
 
-  // Aplicar restricciones de fecha inicial
   applyDateRestrictions();
 
   // Función para aplicar restricciones de fecha
   function applyDateRestrictions() {
-      const dateInputs = document.querySelectorAll('.date-input');
-      const maxDate = new Date();
-      maxDate.setDate(maxDate.getDate() - 20); // Restringe a 20 días atrás desde la fecha actual
+    const dateInputs = document.querySelectorAll(".date-input");
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() - 20); // Restringe a 20 días atrás desde la fecha actual
 
-      dateInputs.forEach(function (dateInput) {
-          dateInput.min = maxDate.toISOString().split('T')[0];
+    dateInputs.forEach(function (dateInput) {
+      dateInput.min = maxDate.toISOString().split("T")[0];
 
-          // Desactivar edición manual
-          dateInput.addEventListener("keydown", function (event) {
-              event.preventDefault();
-          });
-
-          // Desactivar el calendario desplegable en la entrada de fecha
-          dateInput.addEventListener("click", function () {
-              this.blur(); // Desenfocar la entrada para evitar que se abra el calendario
-          });
+      // Desactivar edición manual
+      dateInput.addEventListener("keydown", function (event) {
+        event.preventDefault();
       });
+
+      // Desactivar el calendario desplegable en la entrada de fecha
+      dateInput.addEventListener("click", function () {
+        this.blur(); // Desenfocar la entrada para evitar que se abra el calendario
+      });
+    });
   }
 });
+
+function validarYAbrirModal() {
+  // Validar el formulario externo
+  if (document.getElementById("form-permisos").checkValidity()) {
+    // Abrir el modal si el formulario externo es válido
+    $("#confirmarModal").modal("show");
+  } else {
+    // El formulario externo no es válido, puedes mostrar un mensaje de error si lo deseas
+    alert("Por favor, complete todos los campos del formulario.");
+  }
+}
