@@ -149,3 +149,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Media files
 MEDIA_URL = '/cidimec/licencias-imt/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
