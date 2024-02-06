@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .forms import CreateNewRegis, PermisosFormSet
 from .models import estudiantes, permisos
 from .forms import PermisosFormSet
@@ -60,5 +61,6 @@ def form_regis(request):
                     print(request.POST['flexRadioDefault'])
                     permiso.motivo = request.POST['flexRadioDefault']
                     permiso.save()
+        messages.success(request, 'Registro de licencia exitoso')
 
         return redirect('/cidimec/licencias-imt/registro/')
