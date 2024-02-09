@@ -47,35 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
       '<select name="permisos-' +
         permisoCount +
         '-horaInicio" aria-describedby="addon-wrapping" class="form-select">\
-        <option value="00:00">00:00</option>\
-        <option value="00:15">00:15</option>\
-        <option value="00:30">00:30</option>\
-        <option value="00:45">00:45</option>\
-        <option value="01:00">01:00</option>\
-        <option value="01:15">01:15</option>\
-        <option value="01:30">01:30</option>\
-        <option value="01:45">01:45</option>\
-        <option value="02:00">02:00</option>\
-        <option value="02:15">02:15</option>\
-        <option value="02:30">02:30</option>\
-        <option value="02:45">02:45</option>\
-        <option value="03:00">03:00</option>\
-        <option value="03:15">03:15</option>\
-        <option value="03:30">03:30</option>\
-        <option value="03:45">03:45</option>\
-        <option value="04:00">04:00</option>\
-        <option value="04:15">04:15</option>\
-        <option value="04:30">04:30</option>\
-        <option value="04:45">04:45</option>\
-        <option value="05:00">05:00</option>\
-        <option value="05:15">05:15</option>\
-        <option value="05:30">05:30</option>\
-        <option value="05:45">05:45</option>\
-        <option value="06:00">06:00</option>\
-        <option value="06:15">06:15</option>\
-        <option value="06:30">06:30</option>\
-        <option value="06:45">06:45</option>\
-        <option value="07:00">07:00</option>\
         <option value="07:15">07:15</option>\
         <option value="07:30">07:30</option>\
         <option value="07:45">07:45</option>\
@@ -134,48 +105,10 @@ document.addEventListener("DOMContentLoaded", function () {
         <option value="21:00">21:00</option>\
         <option value="21:15">21:15</option>\
         <option value="21:30">21:30</option>\
-        <option value="21:45">21:45</option>\
-        <option value="22:00">22:00</option>\
-        <option value="22:15">22:15</option>\
-        <option value="22:30">22:30</option>\
-        <option value="22:45">22:45</option>\
-        <option value="23:00">23:00</option>\
-        <option value="23:15">23:15</option>\
-        <option value="23:30">23:30</option>\
-        <option value="23:45">23:45</option>\
     </select>',
       '<select name="permisos-' +
         permisoCount +
         '-horaFin" aria-describedby="addon-wrapping" class="form-select">\
-        <option value="00:00">00:00</option>\
-        <option value="00:15">00:15</option>\
-        <option value="00:30">00:30</option>\
-        <option value="00:45">00:45</option>\
-        <option value="01:00">01:00</option>\
-        <option value="01:15">01:15</option>\
-        <option value="01:30">01:30</option>\
-        <option value="01:45">01:45</option>\
-        <option value="02:00">02:00</option>\
-        <option value="02:15">02:15</option>\
-        <option value="02:30">02:30</option>\
-        <option value="02:45">02:45</option>\
-        <option value="03:00">03:00</option>\
-        <option value="03:15">03:15</option>\
-        <option value="03:30">03:30</option>\
-        <option value="03:45">03:45</option>\
-        <option value="04:00">04:00</option>\
-        <option value="04:15">04:15</option>\
-        <option value="04:30">04:30</option>\
-        <option value="04:45">04:45</option>\
-        <option value="05:00">05:00</option>\
-        <option value="05:15">05:15</option>\
-        <option value="05:30">05:30</option>\
-        <option value="05:45">05:45</option>\
-        <option value="06:00">06:00</option>\
-        <option value="06:15">06:15</option>\
-        <option value="06:30">06:30</option>\
-        <option value="06:45">06:45</option>\
-        <option value="07:00">07:00</option>\
         <option value="07:15">07:15</option>\
         <option value="07:30">07:30</option>\
         <option value="07:45">07:45</option>\
@@ -234,15 +167,6 @@ document.addEventListener("DOMContentLoaded", function () {
         <option value="21:00">21:00</option>\
         <option value="21:15">21:15</option>\
         <option value="21:30">21:30</option>\
-        <option value="21:45">21:45</option>\
-        <option value="22:00">22:00</option>\
-        <option value="22:15">22:15</option>\
-        <option value="22:30">22:30</option>\
-        <option value="22:45">22:45</option>\
-        <option value="23:00">23:00</option>\
-        <option value="23:15">23:15</option>\
-        <option value="23:30">23:30</option>\
-        <option value="23:45">23:45</option>\
     </select>',
       '<input type="date" name="permisos-' +
         permisoCount +
