@@ -25,6 +25,9 @@ SECRET_KEY = 'django-insecure-t!i=oxe7)y3cntmz(11icgd*z-t$h3hrm_xv0bjrsl25w5f)2)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ALLOWED_HOSTS = ['www.imt.ucb.edu.bo', '127.0.0.1']
+# Usar solo en caso de pruebas
+# ALLOWED_HOSTS = ['www.imt.ucb.edu.bo', '127.0.0.1',
+#                 '85da-2800-cd0-2007-3b00-d932-8c86-cf32-be0.ngrok-free.app']
 
 
 # Application definition
