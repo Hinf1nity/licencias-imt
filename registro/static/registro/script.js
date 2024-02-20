@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let permisoCount = window.permisoCount;
 
   addButton.addEventListener("click", function () {
+    permisoCount++;
     const newRow = document.createElement("tr");
     newRow.className = "permiso-fila";
 
@@ -168,9 +169,11 @@ document.addEventListener("DOMContentLoaded", function () {
         <option value="21:15">21:15</option>\
         <option value="21:30">21:30</option>\
     </select>',
-      '<input type="date" name="permisos-' +
+      '<input type="text" name="permisos-' +
         permisoCount +
-        '-fecha" aria-describedby="addon-wrapping" class="form-control date-input" onkeydown="return false;" onfocus=\'(this.type="date")\' />',
+        '-fecha" aria-describedby="addon-wrapping" id="dateInput-' +
+        permisoCount +
+        '" class="form-control date-input" placeholder="Seleccione una fecha" autocomplete="off" required />',
     ];
 
     let labels = [
@@ -188,8 +191,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     tbody.appendChild(newRow);
-    permisoCount++;
-    document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
+    console.log(permisoCount + 1);
+    document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount + 1;
+    console.log(document.getElementById("id_permisos-TOTAL_FORMS").value);
     applyDateRestrictions(); // Aplicar restricciones de fecha a todas las filas
   });
 
@@ -200,7 +204,9 @@ document.addEventListener("DOMContentLoaded", function () {
       if (lastPermiso) {
         tbody.removeChild(lastPermiso);
         permisoCount--;
-        document.getElementById("id_permisos-TOTAL_FORMS").value = permisoCount;
+        document.getElementById("id_permisos-TOTAL_FORMS").value =
+          Number(document.getElementById("id_permisos-TOTAL_FORMS").value) - 1;
+        console.log(document.getElementById("id_permisos-TOTAL_FORMS").value);
       }
     }
   });
@@ -213,22 +219,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Función para aplicar restricciones de fecha
   function applyDateRestrictions() {
-    const dateInputs = document.querySelectorAll(".date-input");
-    const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() - 20); // Restringe a 20 días atrás desde la fecha actual
+    const dateInput = document.getElementById("dateInput-" + permisoCount);
+    console.log("dateInput-" + permisoCount);
 
-    dateInputs.forEach(function (dateInput) {
-      dateInput.min = maxDate.toISOString().split("T")[0];
+    // Obtén la fecha actual
+    const currentDate = new Date();
 
-      // Desactivar edición manual
-      dateInput.addEventListener("keydown", function (event) {
-        event.preventDefault();
-      });
+    // Calcula la fecha mínima (20 días antes de la fecha actual)
+    const minDate = new Date();
+    minDate.setDate(currentDate.getDate() - 20);
 
-      // Desactivar el calendario desplegable en la entrada de fecha
-      dateInput.addEventListener("click", function () {
-        this.blur(); // Desenfocar la entrada para evitar que se abra el calendario
-      });
+    const picker = new Pikaday({
+      field: dateInput,
+      yearRange: [1900, currentDate.getFullYear()], // Ajusta el rango de años según tus necesidades
+      minDate: minDate, // Restringe a 20 días atrás desde la fecha actual
+      onSelect: function (date) {
+        // Formatear la fecha en formato YYYY-MM-DD
+        const formattedDate = date.toISOString().split("T")[0];
+        dateInput.value = formattedDate;
+      },
+    });
+
+    // Desactivar edición manual
+    dateInput.addEventListener("keydown", function (event) {
+      event.preventDefault();
+    });
+
+    // Agregar un evento de clic para abrir manualmente el selector de fecha
+    dateInput.addEventListener("click", function () {
+      picker.show();
     });
   }
 });

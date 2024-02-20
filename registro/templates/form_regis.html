@@ -10,6 +10,9 @@
     <title>Registro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
     <style>
         body {
             margin-bottom: 100px;
@@ -393,7 +396,10 @@
                             </td>
                             <td>
                                 <label for="id_permisos-0-fecha"></label>
-                                <input type="date" name="permisos-0-fecha" class="form-control date-input" required />
+                                <input type="text" name="permisos-0-fecha" id="dateInput-0"
+                                    class="form-control date-input" placeholder="Seleccione una fecha"
+                                    autocomplete="off" required>
+                                <!-- <input type="date" name="permisos-0-fecha" class="form-control date-input" required /> -->
                             </td>
                         </tr>
                     </tbody>
@@ -533,7 +539,7 @@
     </div>
 
     <script>
-        window.permisoCount = 1;
+        window.permisoCount = 0;
     </script>
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
