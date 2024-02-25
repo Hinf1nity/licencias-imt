@@ -13,16 +13,15 @@ class PermisosView(View):
         permisos_dict = {}
 
         for permiso in permisos:
-            if permiso.id_solicitud not in permisos_dict:
+            if permiso.project_id not in permisos_dict:
                 estudiante = RegistroEstudiantes.objects.get(
                     id=permiso.project_id)
-                permisos_dict[permiso.id_solicitud] = {
+                permisos_dict[permiso.project_id] = {
                     'estudiante': estudiante.name + " " + estudiante.apellido, 'materias': [], }
-            permisos_dict[permiso.id_solicitud]['materias'].append({
+            permisos_dict[permiso.project_id]['materias'].append({
                 'materia': permiso.materia,
-                'horaInicio': permiso.horaInicio.strftime("%I:%M %p"),
-                'horaFin': permiso.horaFin.strftime("%I:%M %p"),
+                'horaInicio': permiso.horaInicio.strftime("%H:%M"),
+                'horaFin': permiso.horaFin.strftime("%H:%M"),
                 'fecha': permiso.fecha,
             })
-        print([permisos_dict])
         return render(request, 'docente_consulta.html', {'permisos': permisos_dict})
