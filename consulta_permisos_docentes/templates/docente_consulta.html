@@ -28,32 +28,45 @@
 </header>
 
 <body>
-    <input type="text" id="inputBusqueda" placeholder="Buscar...">
-    <div class="accordion" id="accordionExample">
-        {% for id_solicitud, permiso in permisos.items %}
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="heading{{ id_solicitud }}">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#collapse{{ id_solicitud }}" aria-expanded="false"
-                    aria-controls="collapse{{ id_solicitud }}">
-                    {{ permiso.estudiante }}
-                </button>
-            </h2>
-            <div id="collapse{{ id_solicitud }}" class="accordion-collapse collapse"
-                aria-labelledby="heading{{ id_solicitud }}" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                    {% for materias in permiso.materias %}
-                    <div class="permiso">
-                        <div class="materia">{{ materias.materia }}<br /></div>
-                        <div>Fecha: {{ materias.fecha }}<br /></div>
-                        <div>Hora de inicio: {{ materias.horaInicio }}<br /></div>
-                        <div>Hora de fin: {{ materias.horaFin }}<br /></div>
-                    </div>
-                    {% endfor %}
-                </div>
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <input type="text" id="inputBusqueda" class="form-control" placeholder="Buscar por materia...">
+            </div>
+            <div class="col-md-6 mb-3">
+                <input type="text" id="inputHoraInicio" class="form-control" placeholder="Buscar por hora de inicio...">
             </div>
         </div>
-        {% endfor %}
+        <div class="accordion" id="accordionExample">
+            {% for id_solicitud, permiso in permisos.items %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ id_solicitud }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse{{ id_solicitud }}" aria-expanded="false"
+                        aria-controls="collapse{{ id_solicitud }}">
+                        {{ permiso.estudiante }}
+                    </button>
+                </h2>
+                <div id="collapse{{ id_solicitud }}" class="accordion-collapse collapse"
+                    aria-labelledby="heading{{ id_solicitud }}" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        {% for materias in permiso.materias %}
+                        <div class="permiso mb-3">
+                            <div class="row">
+                                <div class="materia col-md-6"> <strong>Materia:</strong> {{ materias.materia }}<br /></div>
+                                <div class="col-md-6"><strong>Fecha:</strong> {{ materias.fecha }}<br /></div>
+                            </div>
+                            <div class="row">
+                                <div class="horaInicio col-md-6"><strong>Hora de inicio:</strong> {{ materias.horaInicio }}<br /></div>
+                                <div class="col-md-6"><strong>Hora de fin:</strong> {{ materias.horaFin }}<br /></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
     <script>
 

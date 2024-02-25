@@ -27,7 +27,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ['www.imt.ucb.edu.bo', '127.0.0.1']
 # Usar solo en caso de pruebas
 ALLOWED_HOSTS = ['www.imt.ucb.edu.bo', '127.0.0.1',
-                 '4e75-2800-cd0-2007-3b00-7890-200c-667c-db51.ngrok-free.app']
+                  '0b7d-200-105-158-230.ngrok-free.app']
 
 
 # Application definition
