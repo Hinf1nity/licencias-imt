@@ -25,6 +25,8 @@ urlpatterns = [
     path('cidimec/licencias-imt/consultas/', include('consultas.urls')),
     path('cidimec/licencias-imt/gestion/', include('gestion.urls')),
     path('cidimec/licencias-imt/login/', include('login.urls')),
+    path('cidimec/licencias-imt/consulta_permisos_docentes/',
+         include('consulta_permisos_docentes.urls')),
 ]
 
 if settings.DEBUG:

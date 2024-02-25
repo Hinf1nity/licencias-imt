@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'gestion',
     'login',
     'logout',
+    'consulta_permisos_docentes',
 ]
 
 MIDDLEWARE = [
