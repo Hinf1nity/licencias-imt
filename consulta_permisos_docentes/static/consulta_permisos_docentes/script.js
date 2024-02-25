@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   var inputBusqueda = document.getElementById("inputBusqueda");
   var listaElementos = document.getElementById("accordionExample");
   var acordeones = listaElementos.getElementsByClassName("accordion-item");
-  console.log(acordeones);
 
   // Agregar un evento de entrada al campo de búsqueda
   inputBusqueda.addEventListener("input", function () {
@@ -18,6 +17,17 @@ document.addEventListener("DOMContentLoaded", function () {
           break;
         } else {
           acordeones[i].style.display = "none";
+        }
+      }
+      if (acordeones[i].style.display == "block") {
+        var permiso = acordeones[i].getElementsByClassName("permiso");
+        for (var j = 0; j < permiso.length; j++) {
+          var textoElemento = materias[j].innerText.toLowerCase();
+          if (textoElemento.includes(busqueda)) {
+            permiso[j].style.display = "block";
+          } else {
+            permiso[j].style.display = "none";
+          }
         }
       }
     }

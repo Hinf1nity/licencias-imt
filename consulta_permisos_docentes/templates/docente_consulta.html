@@ -43,10 +43,12 @@
                 aria-labelledby="heading{{ id_solicitud }}" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     {% for materias in permiso.materias %}
-                    <div class="materia">{{ materias.materia }}<br /></div>
-                    <div>Fecha: {{ materias.fecha }}<br /></div>
-                    <div>Hora de inicio: {{ materias.horaInicio }}<br /></div>
-                    <div>Hora de fin: {{ materias.horaFin }}<br /></div>
+                    <div class="permiso">
+                        <div class="materia">{{ materias.materia }}<br /></div>
+                        <div>Fecha: {{ materias.fecha }}<br /></div>
+                        <div>Hora de inicio: {{ materias.horaInicio }}<br /></div>
+                        <div>Hora de fin: {{ materias.horaFin }}<br /></div>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
