@@ -11,6 +11,7 @@ class PermisosView(View):
         permisos = RegistroPermisos.objects.filter(estado='Aceptado')
         ids = []
         permisos_dict = {}
+        permisos = permisos.order_by('-fecha')
 
         for permiso in permisos:
             if permiso.project_id not in permisos_dict:
@@ -24,4 +25,5 @@ class PermisosView(View):
                 'horaFin': permiso.horaFin.strftime("%H:%M"),
                 'fecha': permiso.fecha,
             })
+
         return render(request, 'docente_consulta.html', {'permisos': permisos_dict})
