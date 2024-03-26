@@ -6,10 +6,37 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from django.http import JsonResponse
+from django.core.mail import send_mail
+from django.conf import settings
 
 def admin_user_check(user):
     return user.is_authenticated and user.is_staff
 
+def send_notification_email(estudiante_nombre, estado, email, materia):
+    
+    subject = f'Actualización de estado de solicitud de licencia'
+    subject2 = f'Estudiante: {estudiante_nombre}; Actualización de estado de solicitud de licencia'
+    materias_str = ', '.join(materia)
+    message_inge = (f"La solicitud de licencia realiza por el/la estudiante: {estudiante_nombre} fue "
+                    f"{estado} en la(s) materia(s) de {materias_str}. \n\n"
+                    "Saludos cordiales.")
+    if estado != 'Observado':
+        message = (f"Estimado/a {estudiante_nombre},\n\n"
+            f"Te informamos que la solicitud de licencia realizada fue "
+            f"{estado} en la(s) materia(s) de {materias_str}.\n\n"
+            "Saludos cordiales.")
+    else: 
+        message = (f"Estimado/a {estudiante_nombre},\n\n"
+            f"Te informamos que la solicitud de licencia realizada fue "
+            f"{estado} en la(s) materia(s) de {materias_str}.\n\n" 
+            f"Por lo que se deja la consideración de la misma, al/los docente(s) de la(s) materia(s).\n\n"
+            "Saludos cordiales.")
+    email_from = settings.EMAIL_HOST_USER
+    recipient_list = [email]
+
+    send_mail(subject, message, email_from, recipient_list)
+    send_mail(subject2, message_inge, email_from, ["fdiaz@ucb.edu.bo"])
+    
 class AdminOnlyView(LoginRequiredMixin, View):
     login_url = '/cidimec/licencias-imt/login/'
 
@@ -57,14 +84,26 @@ class AdminOnlyView(LoginRequiredMixin, View):
         else:
             permiso_id = request.POST.get('permisoid_solicitud')
             new_status = request.POST.get('status')
-
+            print(permiso_id)
             permisos = RegistroPermisos.objects.filter(id_solicitud=permiso_id)
+            mat_int= RegistroPermisos.objects.filter(id_solicitud=permiso_id)
+            materias_que = [permiso.materia for permiso in mat_int]
+            id_estudiante = get_object_or_404(RegistroPermisos, id=permiso_id)
+            nombre = id_estudiante.project.name
+            apellido = id_estudiante.project.apellido
+            email = id_estudiante.project.email
+            materia=materias_que
+            print(materia)
+            
+            print(email)
             if new_status == 'Aceptado' or new_status == 'Rechazado' or new_status == 'Observado':
                 for i in permisos:
                     form = RegistroPermisosForm(request.POST, instance=i)
                 for i in permisos:
                     i.estado = new_status
                     i.save()
+                send_notification_email(nombre+" "+apellido, new_status, email, materia)
+                
 
             return redirect('petition_list')
 

@@ -27,7 +27,7 @@ DEBUG = True
 # ALLOWED_HOSTS = ['www.imt.ucb.edu.bo', '127.0.0.1']
 # Usar solo en caso de pruebas
 ALLOWED_HOSTS = ['www.imt.ucb.edu.bo', '127.0.0.1',
-                  '0b7d-200-105-158-230.ngrok-free.app']
+                  '3ca7-200-105-158-230.ngrok-free.app']
 
 
 # Application definition
@@ -66,6 +66,7 @@ TEMPLATES = [
             BASE_DIR / "registro" / "templates",
             BASE_DIR / "consultas" / "templates",
             BASE_DIR / "gestion" / "templates",
+            BASE_DIR / "consulta_permisos_docentes" / "templates",
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -80,6 +81,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'page_permisos.wsgi.application'
+
+
 LOGIN_REDIRECT_URL = '/cidimec/licencias-imt/gestion/'
 LOGOUT_REDIRECT_URL = '/cidimec/licencias-imt/login/'
 
@@ -149,6 +152,13 @@ STATIC_ROOT = BASE_DIR / 'static_files'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Configuración para envío de emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 
 # Media files
 MEDIA_URL = '/cidimec/licencias-imt/media/'
