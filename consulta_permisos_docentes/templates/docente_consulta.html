@@ -43,7 +43,7 @@
                     <option value="08:15">08:15</option>
                     <option value="08:30">08:30</option>
                     <option value="08:45">08:45</option>
-                    <option value="09:00">08:00</option>
+                    <option value="09:00">09:00</option>
                     <option value="09:15">09:15</option>
                     <option value="09:30">09:30</option>
                     <option value="09:45">09:45</option>
@@ -96,6 +96,15 @@
                     <option value="21:30">21:30</option>
                 </select>
             </div>
+            <div class="col-md-6 mb-3">
+                <select id="inputEstado" class="form-select">
+                    <option value="">--Seleccione Estado--</option>
+                    <option value="Aceptado">Aceptado</option>
+                    <option value="Rechazado">Rechazado</option>
+                    <option value="Observado">Observado</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select>
+            </div>            
         </div>
         <div class="accordion" id="accordionExample">
             {% for id_solicitud, permiso in permisos.items %}
@@ -122,6 +131,21 @@
                                     <strong>Hora de inicio:</strong> {{ materias.horaInicio }}<br />
                                 </div>
                                 <div class="col-md-6"><strong>Hora de fin:</strong> {{ materias.horaFin }}<br /></div>
+                            </div>
+                            <div class="row">
+                                <div class="estado col-md-12">
+                                    <strong>Estado:</strong>
+                                    {% if materias.estado == 'Aceptado' %}
+                                        <font color="green">{{ materias.estado }}</font>
+                                    {% elif materias.estado == 'Rechazado' %}
+                                        <font color="red">{{ materias.estado }}</font>
+                                    {% elif materias.estado == 'Observado' %}
+                                        <font color="blue">{{ materias.estado }}</font>
+                                    {% elif materias.estado == 'Pendiente' %}
+                                        <font color="orange">{{ materias.estado }}</font>
+                                    {% endif %}
+                                    <br /> 
+                                </div>
                             </div>
                             {% if not forloop.last %}
                             <hr>

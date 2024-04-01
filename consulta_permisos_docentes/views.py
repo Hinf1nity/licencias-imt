@@ -8,7 +8,8 @@ from registro.models import permisos as RegistroPermisos
 
 class PermisosView(View):
     def get(self, request):
-        permisos = RegistroPermisos.objects.filter(estado='Aceptado')
+        #permisos = RegistroPermisos.objects.filter(estado='Aceptado')
+        permisos = RegistroPermisos.objects.all()
         ids = []
         permisos_dict = {}
         permisos = permisos.order_by('-fecha')
@@ -24,6 +25,7 @@ class PermisosView(View):
                 'horaInicio': permiso.horaInicio.strftime("%H:%M"),
                 'horaFin': permiso.horaFin.strftime("%H:%M"),
                 'fecha': permiso.fecha,
+                'estado': permiso.estado,
             })
 
         return render(request, 'docente_consulta.html', {'permisos': permisos_dict})
