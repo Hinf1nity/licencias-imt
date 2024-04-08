@@ -4,6 +4,8 @@ from .forms import CreateNewRegis, PermisosFormSet
 from .models import estudiantes, permisos
 from .forms import PermisosFormSet
 import datetime
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 
@@ -11,6 +13,15 @@ import datetime
 def index(request):
     return render(request, 'index.html')
 
+def send_notification_email(estudiante_nombre, estudiante_apellido, materia):
+    estudiante_name = f"{estudiante_apellido} {estudiante_nombre}"
+    subject = f'Estudiante: {estudiante_name}; Solicitud de licencia'
+    materias_str = ', '.join(materia)
+    message_inge = (f"Estimado Ing. Fabio Diaz, se comunica que el/la estudiante {estudiante_nombre} {estudiante_apellido} realizó la solicitud de licencia para"
+                    f" la(s) materia(s) de {materias_str}. \n\n"
+                    "Saludos cordiales.")
+    email_from = settings.EMAIL_HOST_USER
+    send_mail(subject, message_inge, email_from, ["samu28n04@gmail.com"])
 
 def form_regis(request):
     if request.method == 'GET':
@@ -65,6 +76,10 @@ def form_regis(request):
                     print(request.POST['flexRadioDefault'])
                     permiso.motivo = request.POST['flexRadioDefault']
                     permiso.save()
+            materias_solicitadas = [form.cleaned_data['materia'] for form in formset.forms if form.cleaned_data.get('materia')]
+            if estudiantes.objects.filter(ci=request.POST['ci']).exists():
+                estudiante = estudiantes.objects.get(ci=request.POST['ci'])
+                send_notification_email(estudiante.name, estudiante.apellido, materias_solicitadas)
         messages.success(request, 'Registro de licencia exitoso')
 
         return redirect('/cidimec/licencias-imt/registro/')

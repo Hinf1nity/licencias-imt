@@ -153,12 +153,18 @@ STATIC_ROOT = BASE_DIR / 'static_files'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Configuración para envío de emails
+#EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+#EMAIL_HOST = "az1-ss5.a2hosting.com"
+#EMAIL_USE_TLS = True
+#EMAIL_PORT = 465
+#EMAIL_HOST_USER = 'info@imt.ucb.edu.bo'
+#EMAIL_HOST_PASSWORD = 'C1D1M3C.imt'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'info.cidimec@gmail.com'
+EMAIL_HOST_PASSWORD = 'wtlg vofh lecj vsmh'
 
 # Media files
 MEDIA_URL = '/cidimec/licencias-imt/media/'
