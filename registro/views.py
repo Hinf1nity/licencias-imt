@@ -26,9 +26,9 @@ def form_regis(request):
             )
         else:
             estudiante = estudiantes.objects.get(ci=request.POST['ci'])
-            if estudiante.name != request.POST['nombre']:
+            if estudiante.name.strip().lower() != request.POST['nombre'].strip().lower():
                 return render(request, 'form_regis.html', {'form': CreateNewRegis(), 'msg': 'El carnet existe con otro nombre'})
-            elif estudiante.apellido != request.POST['apellido']:
+            elif estudiante.apellido.strip().lower() != request.POST['apellido'].strip().lower():
                 return render(request, 'form_regis.html', {'form': CreateNewRegis(), 'msg1': 'El carnet existe con otro apellido'})
             elif estudiante.email == "":
                 estudiante.email = request.POST['email']
